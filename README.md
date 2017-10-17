@@ -1,7 +1,4 @@
 # kaggle-redefining-cancer-treatment-ailabs
-Taiwan AI Labs' solution to Kaggle competition "Personalized Medicine: Redefining Cancer Treatment"
-
-# kaggle-redefining-cancer-treatment-ailabs
 This repository contains solution to Kaggle competition "Personalized Medicine: Redefining Cancer Treatment" by Taiwan AI Labs
 
 ## Prerequisites
