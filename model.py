@@ -11,7 +11,7 @@ class Model:
     def __init__(self, **kwargs):
         params = {
             'eta': 0.02,
-            'max_depth': 6,
+            'max_depth': 8,
             'min_child_weight': 1,
             'objective': 'multi:softprob',
             'eval_metric': 'mlogloss',
@@ -30,6 +30,8 @@ class Model:
         preds = []
 
         print('Will do {fold}-fold cv for {repeat} times'.format(fold=fold, repeat=repeat))
+        
+        all_scores = []
         for shift in range(0, 100*repeat, 100):
             scores = []
             
@@ -46,19 +48,21 @@ class Model:
 
                 model = xgb.train(
                             params, xgb.DMatrix(x1, y1), 1000,
-                            watchlist, verbose_eval=50,
+                            watchlist, verbose_eval=100,
                             early_stopping_rounds=50)
 
                 score = metrics.log_loss(
                                     y2, model.predict(xgb.DMatrix(x2)),
                                     labels = list(range(9)))
 
-                print('\nlogloss for this fold:', score)
+                print('\nlogloss for this fold:', score, '\n')
                 scores.append(score)
 
                 pred_test = model.predict(xgb.DMatrix(test))
                 preds.append(pred_test)
 
-            print('\nlogloss for this CV:', np.mean(scores))
+            print('\nlogloss for this CV:', np.mean(scores), '\n')
+            all_scores += scores
 
+        print('average logloss for this model: ', np.mean(all_scores), '\n\n')
         return np.asarray(preds)

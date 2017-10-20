@@ -241,13 +241,19 @@ feat_all = np.hstack([df_w2v_gene, df_w2v_alex,
                      ])
 
 print(feat_all.shape)
+
+# we only use point substitution for training this model
+point_idx = train.apply(lambda r: r['var'].type == 'point', axis=1)
 feat_train = feat_all[:len(train)]
+feat_train = feat_train[point_idx]
+y2 = y[point_idx]
+
 feat_test = feat_all[len(train):]
 
 model_4 = Model()
 
 preds_4 = model_4.cv(
-            feat_train, y, feat_test,
+            feat_train, y2, feat_test,
             fold=fold, repeat=repeat
           )
 preds_4 = np.mean(preds_4, axis=0)
