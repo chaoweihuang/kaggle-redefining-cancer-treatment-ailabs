@@ -24,7 +24,7 @@ Before running the experiments, please run `preprocess.sh` to install required p
 
 We need nltk tokenizers, so please download it manually by
 
-    python3 -m nltk.downloader punkt $PATH_TO_YOUR_HOME/nltk_data
+    python3 -m nltk.downloader -d $PATH_TO_YOUR_HOME/nltk_data punkt
 
 For running all the experiments, simply use `run.sh`:
 
